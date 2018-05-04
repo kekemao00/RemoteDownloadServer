@@ -1,6 +1,7 @@
 package com.wisega.tool;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -16,6 +17,7 @@ public class WisegaRemoteServer extends Thread{
     private Map<String,String> mConfigMap = new HashMap<>();
     private ServerSocket mServerSocket;
     private List<RemoteClient> mClient = new ArrayList<>();
+    private Map<String,String> mOTAFiles = new HashMap<>();
 	@Override
 	public void run() {
 		
@@ -29,6 +31,17 @@ public class WisegaRemoteServer extends Thread{
 				mConfigMap.put(sp[0], sp[1]);
 			}
 			bufferedReader.close();
+			
+			List<File> files = Tool.getFiles("./APPUSER");
+			for(File file:files)
+			{
+				String name = file.getName();
+				String[] sp = name.split("_",-1);
+				mOTAFiles.put(sp[0], sp[1].substring(1));
+			}
+				
+			
+			
 		}catch(Exception e)
 		{
 			e.printStackTrace();
@@ -41,7 +54,7 @@ public class WisegaRemoteServer extends Thread{
 			while(true) {
 				
 				Socket socket = mServerSocket.accept();
-				RemoteClient remoteClient = new RemoteClient(socket);
+				RemoteClient remoteClient = new RemoteClient(socket,mOTAFiles);
 				remoteClient.setICallBack(new ICallBack() {
 					
 					@Override

@@ -4,7 +4,12 @@ import java.util.ArrayList;
 
 
 public class ByteArrayList extends ArrayList<byte[]> {
-    public ByteArrayList() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public ByteArrayList() {
     }
 
     public ByteArrayList(byte[] bytes) {

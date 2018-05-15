@@ -9,7 +9,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 传输协议：头 长度 类型 A5 长度 类型 APP应用信息： A5 03 01 ......... APP获取最新OTA信息：A5 03 02
+ * 传输协议：头 长度 类型 A5 长度 类型   
+ * APP应用信息： A5 03 01 .........   ift7
+ * APP获取最新OTA信息：A5 03 02  
  * APP获取最新OTA文件：A5 03 03 a/b
  */
 public class RemoteClient extends Thread {
@@ -112,7 +114,6 @@ public class RemoteClient extends Thread {
 						mSendFile.start();
 					}
 				} else {
-
 					String wantImgType = new String(Arrays.copyOfRange(data, 6, dataLen));
 					Tool.log(mAPPUser + " wantImgType: " + wantImgType);
 					String mark = "_" + wantImgType + "_";
@@ -120,13 +121,6 @@ public class RemoteClient extends Thread {
 					long size = 0;
 					for (File file : files) {
 						String path = file.getPath();
-						// if(path.contains(mAPPUser)&&!file.getName().contains(mark))
-						// {
-						// Tool.log("send path:"+path);
-						// mSendFile = new SendFileTask(this, file);
-						// size = file.length();
-						// }
-
 						if (path.contains(mAPPUser)) {
 							List<File> inFiles = Tool.getFiles(path);
 							for (File inFile : inFiles) {

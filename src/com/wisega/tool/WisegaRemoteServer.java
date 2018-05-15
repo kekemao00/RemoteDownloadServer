@@ -1,6 +1,5 @@
-package com.wisega.tool;
 
-import java.io.BufferedReader;
+package com.wisega.tool;
 import java.io.File;
 import java.io.FileReader;
 import java.net.ServerSocket;
@@ -11,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.wisega.tool.RemoteClient.ICallBack;
+import java.io.BufferedReader;
 
 
 public class WisegaRemoteServer extends Thread{
@@ -82,4 +82,5 @@ public class WisegaRemoteServer extends Thread{
 		
 		
 	}
+	
 }

@@ -46,7 +46,7 @@ public class RemoteClient extends Thread {
 			int len = 0;
 
 			while ((len = mInputStream.read(buff)) > 0) {
-				handle(Arrays.copyOf(buff, len));
+				if(!handle(Arrays.copyOf(buff, len)))break;
 
 			}
 		} catch (Exception e) {
@@ -88,13 +88,14 @@ public class RemoteClient extends Thread {
 		return true;
 	}
 
-	private void handle(byte[] data) {
+	private boolean handle(byte[] data) {
 		Tool.log("recFromClient:" + Hex.toString(data));
 		int dataLen = 0;
 		if (data[0] == (byte) 0xa5) {
 			if (data.length < 6 || ((dataLen = Hex.toIntB(Arrays.copyOfRange(data, 1, 5))) < data.length)) {
 				Tool.log("handle data length < 6:" + dataLen);
-				return;
+				
+				return false;
 			}
 			if (data[5] == (byte) 0x01)// 客户端发送来的APP标记
 			{
@@ -141,7 +142,7 @@ public class RemoteClient extends Thread {
 			}
 
 		}
-
+    return true;
 	}
 
 	public interface ICallBack {

@@ -46,7 +46,7 @@ public class WisegaRemoteServer extends Thread {
 		try {
 
 			mServerSocket = new ServerSocket(Integer.parseInt(mConfigMap.get("remote_port")));
-			Tool.log("WisegaRemoteServer open sucess!");
+			Tool.log("2018-05-16  06:55 WisegaRemoteServer open sucess!");
 			while (true) {
 
 				Socket socket = mServerSocket.accept();

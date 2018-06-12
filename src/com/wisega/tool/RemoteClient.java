@@ -9,9 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 传输协议：头 长度 类型 A5 长度 类型   
- * APP应用信息： A5 03 01 .........   ift7
- * APP获取最新OTA信息：A5 03 02  
+ * 传输协议：头 长度 类型 A5 长度 类型 APP应用信息： A5 03 01 ......... ift7 APP获取最新OTA信息：A5 03 02
  * APP获取最新OTA文件：A5 03 03 a/b
  */
 public class RemoteClient extends Thread {
@@ -22,10 +20,20 @@ public class RemoteClient extends Thread {
 	private String mAPPUser = "unknown";
 	private SendFileTask mSendFile;
 	private Map<String, String> mOTAFiles;
+	private String mName = "";
+	private String mMode = "";
 
 	public RemoteClient(Socket socket, Map<String, String> OTAFiles) {
 		mSocket = socket;
 		this.mOTAFiles = OTAFiles;
+	}
+
+	public String getmName() {
+		return mName;
+	}
+
+	public String getmMode() {
+		return mMode;
 	}
 
 	public void setICallBack(ICallBack icCallBack) {
@@ -46,7 +54,8 @@ public class RemoteClient extends Thread {
 			int len = 0;
 
 			while ((len = mInputStream.read(buff)) > 0) {
-				if(!handle(Arrays.copyOf(buff, len)))break;
+				if (!handle(Arrays.copyOf(buff, len)))
+					break;
 
 			}
 		} catch (Exception e) {
@@ -71,14 +80,14 @@ public class RemoteClient extends Thread {
 
 	}
 
-	public boolean writeToClient(byte[] data) {
+	public boolean writeClient(byte[] data) {
 		try {
 
 			if (mOutputStream == null) {
 				return false;
 			}
-			// if(data.length<100)
-			// Tool.log("send:"+Hex.toString(data));
+			if (data.length < 100)
+				Tool.log("send:" + Hex.toString(data));
 			mOutputStream.write(data);
 			mOutputStream.flush();
 		} catch (Exception e) {
@@ -94,17 +103,20 @@ public class RemoteClient extends Thread {
 		if (data[0] == (byte) 0xa5) {
 			if (data.length < 6 || ((dataLen = Hex.toIntB(Arrays.copyOfRange(data, 1, 5))) < data.length)) {
 				Tool.log("handle data length < 6:" + dataLen);
-				
+
 				return false;
 			}
 			if (data[5] == (byte) 0x01)// 客户端发送来的APP标记
 			{
 				mAPPUser = new String(Arrays.copyOfRange(data, 6, dataLen));
+				mName = mAPPUser.substring(0, mAPPUser.indexOf("~"));
+				mMode = mAPPUser.substring(mAPPUser.indexOf("~") + 1, mAPPUser.length());
 				mICallback.connect(mAPPUser);
+				System.out.println("name=" + mName + ",mode=" + mMode);
 			} else if (data[5] == (byte) 0x02)// 客户端发送来获取OTA文件
 			{
 
-				writeToClient(Tool.buildBytes((byte) 0xa5, (byte) 0x02, mOTAFiles.get(mAPPUser).getBytes()));
+				writeClient(Tool.buildBytes((byte) 0xa5, (byte) 0x02, mOTAFiles.get(mName).getBytes()));
 
 			} else if (data[5] == (byte) 0x03)// 客户端要获取OTA文件了
 			{
@@ -115,34 +127,41 @@ public class RemoteClient extends Thread {
 						mSendFile.start();
 					}
 				} else {
+					// todo 拿到名字 mode
 					String wantImgType = new String(Arrays.copyOfRange(data, 6, dataLen));
-					Tool.log(mAPPUser + " wantImgType: " + wantImgType);
+					Tool.log(mName + " wantImgType: " + wantImgType);
 					String mark = "_" + wantImgType + "_";
-					List<File> files = Tool.getFiles("./APPUSER");
+					List<File> names = Tool.getFiles("./APPUSER");
 					long size = 0;
-					for (File file : files) {
-						String path = file.getPath();
-						if (path.contains(mAPPUser)) {
-							List<File> inFiles = Tool.getFiles(path);
-							for (File inFile : inFiles) {
-								String name = file.getName();
-								if (!inFile.getName().contains(mark)) {
-									Tool.log("send name:" + name);
-									mSendFile = new SendFileTask(this, inFile);
-									size = inFile.length();
+					for (File name : names) {
+						String pathName = name.getPath();
+						if (pathName.contains(mName)) {
+							List<File> inModes = Tool.getFiles(pathName);
+							for (File inMode : inModes) {
+								String pathMode = inMode.getPath();
+								if (pathMode.contains(mMode)) {
+									List<File> inFiles = Tool.getFiles(pathMode);
+									for (File inFile : inFiles) {
+										String imgFile = inFile.getName();
+										if (!inFile.getName().contains(mark)) {
+											Tool.log("send name:" + imgFile);
+											mSendFile = new SendFileTask(this, inFile);
+											size = inFile.length();
+										}
+									}
 								}
 							}
 						}
 					}
 
-					writeToClient(Tool.buildBytes((byte) 0xa5, (byte) 0x03, new byte[] { (byte) 0x01 },
+					writeClient(Tool.buildBytes((byte) 0xa5, (byte) 0x03, new byte[] { (byte) 0x01 },
 							Hex.fromIntB((int) size)));// 呼叫客户端准备好标志位，要传输文件了，通道被文件传输占用
 				}
 
 			}
 
 		}
-    return true;
+		return true;
 	}
 
 	public interface ICallBack {

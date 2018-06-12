@@ -23,14 +23,14 @@ public class SendFileTask extends Thread{
 			ByteArrayList byteArrayList = new ByteArrayList();
 			while((len=fileInputStream.read(buff))>0)
 			{
-				mRemoteClient.writeToClient(Arrays.copyOf(buff, len));
+				mRemoteClient.writeClient(Arrays.copyOf(buff, len));
 				byteArrayList.add(Arrays.copyOf(buff, len));
 			
 			}
 			fileInputStream.close();
 			Tool.log(mRemoteClient.getmAPPUser()+" send file ok"+mFile.getName());
 			Tool.sleep(500);
-			mRemoteClient.writeToClient(Tool.buildBytes((byte)0xa5,(byte)0x03,new byte[]{(byte)0x03,Tool.sumCheck(byteArrayList.all2Bytes())}));
+			mRemoteClient.writeClient(Tool.buildBytes((byte)0xa5,(byte)0x03,new byte[]{(byte)0x03,Tool.sumCheck(byteArrayList.all2Bytes())}));
 			byteArrayList.clear();
 		}catch(Exception e)
 		{

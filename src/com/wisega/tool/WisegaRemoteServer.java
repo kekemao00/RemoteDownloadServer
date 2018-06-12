@@ -31,10 +31,11 @@ public class WisegaRemoteServer extends Thread {
 				mConfigMap.put(sp[0], sp[1]);
 			}
 			bufferedReader.close();
-
+			// ур╣╫нд╪Ч
 			List<File> files = Tool.getFiles("./APPUSER");
 			for (File file : files) {
 				String name = file.getName();
+				System.out.println("name=" + name);
 				String[] sp = name.split("_", -1);
 				mOTAFiles.put(sp[0], sp[1].substring(1));
 			}
@@ -48,7 +49,6 @@ public class WisegaRemoteServer extends Thread {
 			mServerSocket = new ServerSocket(Integer.parseInt(mConfigMap.get("remote_port")));
 			Tool.log("2018-05-16  06:55 WisegaRemoteServer open sucess!");
 			while (true) {
-
 				Socket socket = mServerSocket.accept();
 				RemoteClient remoteClient = new RemoteClient(socket, mOTAFiles);
 				remoteClient.setICallBack(new ICallBack() {

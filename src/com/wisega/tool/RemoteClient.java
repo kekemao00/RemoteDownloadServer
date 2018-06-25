@@ -127,7 +127,6 @@ public class RemoteClient extends Thread {
 						mSendFile.start();
 					}
 				} else {
-					// todo ÄÃµ½Ãû×Ö mode
 					String wantImgType = new String(Arrays.copyOfRange(data, 6, dataLen));
 					Tool.log(mName + " wantImgType: " + wantImgType);
 					String mark = "_" + wantImgType + "_";

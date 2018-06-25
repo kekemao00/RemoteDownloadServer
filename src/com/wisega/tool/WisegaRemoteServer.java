@@ -23,12 +23,15 @@ public class WisegaRemoteServer extends Thread {
 	public void run() {
 
 		try {
-			FileReader reader = new FileReader("./ini.txt");
+			FileReader reader = new FileReader("./config.ini");
 			BufferedReader bufferedReader = new BufferedReader(reader);
 			String line;
 			while ((line = bufferedReader.readLine()) != null) {
-				String[] sp = line.split("`", -1);
-				mConfigMap.put(sp[0], sp[1]);
+				if (line.startsWith("=")) {
+					String[] sp = line.substring(1).split("`", -1);
+					mConfigMap.put(sp[0], sp[1]);
+				}
+
 			}
 			bufferedReader.close();
 			// ур╣╫нд╪Ч

@@ -2,49 +2,20 @@ package com.wisega.tool;
 
 public class ImgBean {
 
-	public String getMode() {
-		return mode;
-	}
-
-	public void setMode(String mode) {
-		this.mode = mode;
-	}
-
-	public String getVersion() {
-		return version;
-	}
-
-	public void setVersion(String version) {
-		this.version = version;
-	}
-
-	public String getImageA() {
-		return imageA;
-	}
-
-	public void setImageA(String imageA) {
-		this.imageA = imageA;
-	}
-
-	public String getImageB() {
-		return imageB;
-	}
-
-	public void setImageB(String imageB) {
-		this.imageB = imageB;
-	}
-
 	@Override
-	public String toString() {
-		return "ImgBean [mode=" + mode + ", version=" + version + ", imageA=" + imageA + ", imageB=" + imageB + "]";
+	public boolean equals(Object obj) {
+		// TODO Auto-generated method stub
+		return this.mode.equals(((ImgBean)obj).mode);
 	}
+	
+	public String mName = "unknow";
+	
+	public String mode = "unknow";
 
-	String mode;
+	public  String version;
 
-	String version;
+	public  String imageA;
 
-	String imageA;
-
-	String imageB;
+	public String imageB;
 
 }

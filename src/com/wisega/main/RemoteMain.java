@@ -9,6 +9,7 @@ public class RemoteMain {
 		
 		WisegaRemoteServer wisegaRemoteServer = new WisegaRemoteServer();
 		wisegaRemoteServer.start();
+		
 	}
 
 }

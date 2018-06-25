@@ -1,6 +1,7 @@
 package com.wisega.tool;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
@@ -17,15 +18,12 @@ public class RemoteClient extends Thread {
 	private InputStream mInputStream;
 	private OutputStream mOutputStream;
 	private ICallBack mICallback;
-	private String mAPPUser = "unknown";
 	private SendFileTask mSendFile;
-	private Map<String, String> mOTAFiles;
 	private String mName = "";
 	private String mMode = "";
-
-	public RemoteClient(Socket socket, Map<String, String> OTAFiles) {
+    private ImgBean mImgBean = new ImgBean();
+	public RemoteClient(Socket socket) {
 		mSocket = socket;
-		this.mOTAFiles = OTAFiles;
 	}
 
 	public String getmName() {
@@ -40,10 +38,11 @@ public class RemoteClient extends Thread {
 		mICallback = icCallBack;
 	}
 
-	public String getmAPPUser() {
-		return mAPPUser;
-	}
-
+	
+    public void setBean(ImgBean bean)
+    {
+    	mImgBean = bean;
+    }
 	@Override
 	public void run() {
 
@@ -74,7 +73,7 @@ public class RemoteClient extends Thread {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			mICallback.disconnect(mAPPUser);
+			mICallback.disconnect(mImgBean.mode);
 
 		}
 
@@ -108,15 +107,18 @@ public class RemoteClient extends Thread {
 			}
 			if (data[5] == (byte) 0x01)// 客户端发送来的APP标记
 			{
-				mAPPUser = new String(Arrays.copyOfRange(data, 6, dataLen));
+				String mAPPUser = new String(Arrays.copyOfRange(data, 6, dataLen));
 				mName = mAPPUser.substring(0, mAPPUser.indexOf("~"));
 				mMode = mAPPUser.substring(mAPPUser.indexOf("~") + 1, mAPPUser.length());
-				mICallback.connect(mAPPUser);
+				mICallback.connect(mName,mMode);
 				System.out.println("name=" + mName + ",mode=" + mMode);
+				
+				
+				
 			} else if (data[5] == (byte) 0x02)// 客户端发送来获取OTA文件
 			{
 
-				writeClient(Tool.buildBytes((byte) 0xa5, (byte) 0x02, mOTAFiles.get(mName).getBytes()));
+				writeClient(Tool.buildBytes((byte) 0xa5, (byte) 0x02, mImgBean.version.getBytes()));
 
 			} else if (data[5] == (byte) 0x03)// 客户端要获取OTA文件了
 			{
@@ -129,32 +131,26 @@ public class RemoteClient extends Thread {
 				} else {
 					String wantImgType = new String(Arrays.copyOfRange(data, 6, dataLen));
 					Tool.log(mName + " wantImgType: " + wantImgType);
-					String mark = "_" + wantImgType + "_";
-					List<File> names = Tool.getFiles("./APPUSER");
-					long size = 0;
-					for (File name : names) {
-						String pathName = name.getPath();
-						if (pathName.contains(mName)) {
-							List<File> inModes = Tool.getFiles(pathName);
-							for (File inMode : inModes) {
-								String pathMode = inMode.getPath();
-								if (pathMode.contains(mMode)) {
-									List<File> inFiles = Tool.getFiles(pathMode);
-									for (File inFile : inFiles) {
-										String imgFile = inFile.getName();
-										if (!inFile.getName().contains(mark)) {
-											Tool.log("send name:" + imgFile);
-											mSendFile = new SendFileTask(this, inFile);
-											size = inFile.length();
-										}
-									}
-								}
-							}
+					List<File> otafiles = Tool.getFiles("./APPUSER/"+mImgBean.mName+"/"+mImgBean.mode);
+					int len = 0;
+					for(File file:otafiles)
+					{
+						if(file.getName().contains(wantImgType))
+						{
+							len = (int)file.length();
+							mSendFile = new SendFileTask(this, file);
+							break;
 						}
 					}
-
+					
+                    if(len==0)
+                    {
+                    	//发送找不到文件指令
+                    	return false;
+                    }
+					
 					writeClient(Tool.buildBytes((byte) 0xa5, (byte) 0x03, new byte[] { (byte) 0x01 },
-							Hex.fromIntB((int) size)));// 呼叫客户端准备好标志位，要传输文件了，通道被文件传输占用
+							Hex.fromIntB(len)));// 呼叫客户端准备好标志位，要传输文件了，通道被文件传输占用
 				}
 
 			}
@@ -162,11 +158,23 @@ public class RemoteClient extends Thread {
 		}
 		return true;
 	}
-
+   public void close()
+   {
+	   if(mSocket!=null)
+	   {
+		   try {
+			mSocket.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	   }
+   }
 	public interface ICallBack {
 		void disconnect(String appMark);
 
-		void connect(String appMark);
+		void connect(String name,String mode);
+		
 	}
 
 }

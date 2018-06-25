@@ -14,7 +14,7 @@ public class SendFileTask extends Thread{
    }
 	@Override
 	public void run() {
-		Tool.log(mRemoteClient.getmAPPUser()+" get file ready "+mFile.getName());
+		Tool.log(" get file ready "+mFile.getName());
 		
 		try {
 			FileInputStream fileInputStream = new FileInputStream(mFile);
@@ -28,7 +28,7 @@ public class SendFileTask extends Thread{
 			
 			}
 			fileInputStream.close();
-			Tool.log(mRemoteClient.getmAPPUser()+" send file ok"+mFile.getName());
+			Tool.log(" send file ok"+mFile.getName());
 			Tool.sleep(500);
 			mRemoteClient.writeClient(Tool.buildBytes((byte)0xa5,(byte)0x03,new byte[]{(byte)0x03,Tool.sumCheck(byteArrayList.all2Bytes())}));
 			byteArrayList.clear();

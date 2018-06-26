@@ -1,7 +1,6 @@
 
 package com.wisega.tool;
 
-import java.io.File;
 import java.io.FileReader;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -88,6 +87,7 @@ public class WisegaRemoteServer extends Thread {
 							remoteClient.close();
 							return;
 						}
+						@SuppressWarnings("unchecked")
 						List<ImgBean> lists = (List<ImgBean>) obj;
 						ImgBean tempBean = new ImgBean();
 						tempBean.mode = mode;

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OTA>
+<CJ007>
+	<CJ007-A version="2715">
+		<A md5="e936391d5ced9ee30abc052e45a28c50" length="213076" name="BK3431S_A_add_bd_crc_oad_v2715_20180412.bin">https://wisega-public.oss-cn-beijing.aliyuncs.com/wisega-ota/BK3431S_A_add_bd_crc_oad_v2715_20180412.bin</A>
+		<B md5="1d01826c9ff45f5bc008a5d96eea59b7" length="213076" name="BK3431S_B_add_bd_crc_oad_v2715_20180412.bin">https://wisega-public.oss-cn-beijing.aliyuncs.com/wisega-ota/BK3431S_B_add_bd_crc_oad_v2715_20180412.bin</B>
+	</CJ007-A>
+	<CJ007-KY version="2917">
+		<A md5="0ac684076a3bdb3fc1b66b5bafe0c628" length="211784" name="KY_A_add_bd_crc_oad_v2917_20180621.bin">https://wisega-public.oss-cn-beijing.aliyuncs.com/wisega-ota/KY_A_add_bd_crc_oad_v2917_20180621.bin</A>
+		<B md5="02dc3e39b709d830300063339ceaadeb" length="211784" name="KY_B_add_bd_crc_oad_v2917_20180621.bin">https://wisega-public.oss-cn-beijing.aliyuncs.com/wisega-ota/KY_B_add_bd_crc_oad_v2917_20180621.bin</B>
+	</CJ007-KY>
+	<CJ007-KY2 version="0000">
+		<A md5="dddddddsss" length="0000" name="0000">null</A>
+		<B md5="dddddddsss" length="0000" name="0000">null</B>
+	</CJ007-KY2>
+</CJ007>
+<DELUX-S2>
+	<CJ007-GX2 version="2615" >
+		<A md5="7e3e5982c29fc1ff0bc38e83c98bd555" length="204678" name="DELUX-S2_A_add_bd_crc_oad_V2615_20180425.bin">https://wisega-public.oss-cn-beijing.aliyuncs.com/wisega-ota/DELUX-S2_A_add_bd_crc_oad_V2615_20180425.bin</A>
+		<B md5="76bc5e38140766982b7501f06419e865" length="204678" name="DELUX-S2_B_add_bd_crc_oad_V2615_20180425.bin">https://wisega-public.oss-cn-beijing.aliyuncs.com/wisega-ota/DELUX-S2_B_add_bd_crc_oad_V2615_20180425.bin</B>
+	</CJ007-GX2>
+</DELUX-S2>
+<Gamesir-X1>
+	<CJ007-GX1 version="2816">
+		<A md5="56f51aa6fbc382b8f4a71d29080f844d" length="211886" name="X1_A_add_bd_crc_oad_v2816_20180622.bin">https://wisega.oss-cn-beijing.aliyuncs.com/X1_A_add_bd_crc_oad_v2816_20180622.bin</A>
+		<B md5="ea01fb3c9665f6d73a2d6700bc87c915" length="211886" name="X1_B_add_bd_crc_oad_v2816_20180622.bin">https://wisega-public.oss-cn-beijing.aliyuncs.com/wisega-ota/X1_B_add_bd_crc_oad_v2816_20180622.bin</B>
+	</CJ007-GX1>
+</Gamesir-X1>
+<Gamesir-X2>
+	<CJ007-GX2 version="0216">
+		<A md5="dac0451328098763c3881c9bc9505608" length="212056" name="X2_A_add_bd_crc_oad_v0216_20180622.bin">https://wisega-public.oss-cn-beijing.aliyuncs.com/wisega-ota/X2_A_add_bd_crc_oad_v0216_20180622.bin</A>
+		<B md5="ed50d7c0344b44c7f3d5cf736f9ab977" length="212056" name="X2_B_add_bd_crc_oad_v0216_20180622.bin">https://wisega-public.oss-cn-beijing.aliyuncs.com/wisega-ota/X2_B_add_bd_crc_oad_v0216_20180622.bin</B>
+	</CJ007-GX2>
+</Gamesir-X2>
+<Gamesir-Z1>
+	<CJ007-GZ1 version="2916">
+		<A md5="5c3fb69ef2d8f1c0dcda571c3bbb8897" length="212260" name="Z1_A_add_bd_crc_oad_V2916_20180622.bin">https://wisega-public.oss-cn-beijing.aliyuncs.com/wisega-ota/Z1_A_add_bd_crc_oad_V2916_20180622.bin</A>
+		<B md5="0f847fc6141cc9c5bf6bd092823bb1a4" length="212260" name="Z1_B_add_bd_crc_oad_V2916_20180622.bin">https://wisega-public.oss-cn-beijing.aliyuncs.com/wisega-ota/Z1_B_add_bd_crc_oad_V2916_20180622.bin</B>
+	</CJ007-GZ1>
+</Gamesir-Z1>
+<Gamesir-Z2>
+	<CJ007-GZ2 version="0000">
+		<A md5="dddddddsss" length="0000" name="0000">null</A>
+		<B md5="dddddddsss" length="0000" name="0000">null</B>
+	</CJ007-GZ2>
+</Gamesir-Z2>
+<mingpinspaceKBOX>
+	<CJ007-A version="0000">
+		<A md5="dddddddsss" length="0000" name="0000">null</A>
+		<B md5="dddddddsss" length="0000" name="0000">null</B>
+	</CJ007-A>
+</mingpinspaceKBOX>
+<NewgamespaceK100>
+	<K100 version="1414">
+		<A md5="9ef76e149f0fadbd4cc3f8beca873821" length="213518" name="K100_A_add_bd_crc_oad_V1414_20180416.bin">https://wisega-public.oss-cn-beijing.aliyuncs.com/wisega-ota/K100_A_add_bd_crc_oad_V1414_20180416.bin</A>
+		<B md5="6a972dca8dcb922cc33e34fd55139cbd" length="213518" name="K100_B_add_bd_crc_oad_V1414_20180417.bin">https://wisega-public.oss-cn-beijing.aliyuncs.com/wisega-ota/K100_B_add_bd_crc_oad_V1414_20180416.bin</B>
+	</K100>
+</NewgamespaceK100>
+<NewgamespaceP200>
+	<P200 version="0000">
+		<A md5="dddddddsss" length="0000" name="0000">null</A>
+		<B md5="dddddddsss" length="0000" name="0000">null</B>
+	</P200>
+</NewgamespaceP200>
+<powkiddy>
+	<CJ007-pd version="0000">
+		<A md5="dddddddsss" length="0000" name="0000">null</A>
+		<B md5="dddddddsss" length="0000" name="0000">null</B>
+	</CJ007-pd>
+</powkiddy>
+<powkiddyspaceKBOX>
+	<CJ007-A version="0000">
+		<A md5="dddddddsss" length="0000" name="0000">null</A>
+		<B md5="dddddddsss" length="0000" name="0000">null</B>
+	</CJ007-A>
+</powkiddyspaceKBOX>
+</OTA>
